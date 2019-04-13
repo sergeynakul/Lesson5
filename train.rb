@@ -3,16 +3,13 @@ class Train
   include InstanceCounter
   attr_accessor :speed
   attr_reader :carriages, :type, :number
-  class << self; attr_reader :instances end
-  inheritable_attributes :instances
-  @instances = 0
-  @@trains = []
+  @@trains = {}
 
   def initialize(number)
     @number = number
     @speed = 0
     @carriages = []
-    @@trains << self
+    @@trains[self.number] = self
     register_instance
   end
 
@@ -53,6 +50,6 @@ class Train
   end
 
   def self.find(number)
-    @@trains.detect { |train| train.number == number }
+    @@trains[number]
   end
 end
